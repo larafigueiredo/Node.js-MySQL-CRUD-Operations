@@ -24,9 +24,9 @@ mysqlConnection.connect((err) => {
 app.listen(3000, () => console.log('Express server is runnig at port no : 3000'));
 
 
-//Get all employees
-app.get('/employees', (req, res) => {
-    mysqlConnection.query('SELECT * FROM Employee', (err, rows, fields) => {
+//Get all contatos
+app.get('/contatos', (req, res) => {
+    mysqlConnection.query('SELECT * FROM contatos', (err, rows, fields) => {
         if (!err)
             res.send(rows);
         else
@@ -35,8 +35,8 @@ app.get('/employees', (req, res) => {
 });
 
 //Get an employees
-app.get('/employees/:id', (req, res) => {
-    mysqlConnection.query('SELECT * FROM Employee WHERE EmpID = ?', [req.params.id], (err, rows, fields) => {
+app.get('/contatos/:codigo', (req, res) => {
+    mysqlConnection.query('SELECT * FROM contatos WHERE codigo = ?', [req.params.codigo], (err, rows, fields) => {
         if (!err)
             res.send(rows);
         else
@@ -45,8 +45,8 @@ app.get('/employees/:id', (req, res) => {
 });
 
 //Delete an employees
-app.delete('/employees/:id', (req, res) => {
-    mysqlConnection.query('DELETE FROM Employee WHERE EmpID = ?', [req.params.id], (err, rows, fields) => {
+app.delete('/contatos/:codigo', (req, res) => {
+    mysqlConnection.query('DELETE FROM contatos WHERE codigo = ?', [req.params.codigo], (err, rows, fields) => {
         if (!err)
             res.send('Deleted successfully.');
         else
@@ -62,8 +62,8 @@ app.post('/employees', (req, res) => {
     mysqlConnection.query(sql, [emp.EmpID, emp.Name, emp.EmpCode, emp.Salary], (err, rows, fields) => {
         if (!err)
             rows.forEach(element => {
-                if(element.constructor == Array)
-                res.send('Inserted employee id : '+element[0].EmpID);
+                if (element.constructor == Array)
+                    res.send('Inserted employee id : ' + element[0].EmpID);
             });
         else
             console.log(err);
