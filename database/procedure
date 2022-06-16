@@ -1,23 +1,24 @@
-CREATE PROCEDURE `EmployeeAddOrEdit` (
-IN _EmpID INT,
-IN _Name varchar(45),
-IN _EmpCode varchar(45),
-IN _Salary int
+CREATE PROCEDURE `addOrEdit` (
+IN _codigo INT(11),
+IN _nome varchar(40),
+IN _email varchar(50),
+IN _password varchar(255)
 )
 BEGIN 
-	IF _EmpID = 0 OR _EmpID is NULL THEN
-		INSERT INTO employee(Name,EmpCode,Salary)
-        VALUES (_Name,_EmpCode,_Salary);
-        SET _EmpID = LAST_INSERT_ID();
+	IF _codigo = 0 OR _codigo is NULL THEN
+		INSERT INTO contatos(codigo,nome,email,password)
+        VALUES (_codigo,_nome,_email, _password);
+        SET _codigo = LAST_INSERT_ID();
 	ELSE
-		UPDATE Employee
+		UPDATE contatos
         SET 
-        Name = _Name,
-        EmpCode = _EmpCode,
-        Salary = _Salary
-        WHERE EmpID = _EmpID;
+        codigo = _codigo,
+        nome = _nome,
+        email = _email,
+		password = _password
+        WHERE codigo = _codigo;
 	END IF;
     
-SELECT _EmpID AS 'EmpID';
+SELECT _codigo AS 'codigo';
 
 END
