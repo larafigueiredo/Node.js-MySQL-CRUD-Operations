@@ -55,15 +55,15 @@ app.delete('/contatos/:codigo', (req, res) => {
 });
 
 //Insert an employees
-app.post('/employees', (req, res) => {
+app.post('/contatos', (req, res) => {
     let emp = req.body;
-    var sql = "SET @EmpID = ?;SET @Name = ?;SET @EmpCode = ?;SET @Salary = ?; \
-    CALL EmployeeAddOrEdit(@EmpID,@Name,@EmpCode,@Salary);";
-    mysqlConnection.query(sql, [emp.EmpID, emp.Name, emp.EmpCode, emp.Salary], (err, rows, fields) => {
+    var sql = "SET @codigo = ?;SET @nome = ?;SET @email = ?;SET @password = ?; \
+    CALL addOrEdit(@codigo,@nome,@email,@password);";
+    mysqlConnection.query(sql, [emp.codigo, emp.nome, emp.email, emp.password], (err, rows, fields) => {
         if (!err)
             rows.forEach(element => {
                 if (element.constructor == Array)
-                    res.send('Inserted employee id : ' + element[0].EmpID);
+                    res.send('Inserted employee id : ' + element[0].codigo);
             });
         else
             console.log(err);
@@ -71,11 +71,11 @@ app.post('/employees', (req, res) => {
 });
 
 //Update an employees
-app.put('/employees', (req, res) => {
+app.put('/contatos', (req, res) => {
     let emp = req.body;
-    var sql = "SET @EmpID = ?;SET @Name = ?;SET @EmpCode = ?;SET @Salary = ?; \
-    CALL EmployeeAddOrEdit(@EmpID,@Name,@EmpCode,@Salary);";
-    mysqlConnection.query(sql, [emp.EmpID, emp.Name, emp.EmpCode, emp.Salary], (err, rows, fields) => {
+    var sql = "SET @codigo = ?;SET @nome = ?;SET @email = ?;SET @password = ?; \
+    CALL addOrEdit(@codigo,@nome,@email,@password);";
+    mysqlConnection.query(sql, [emp.codigo, emp.nome, emp.email, emp.password], (err, rows, fields) => {
         if (!err)
             res.send('Updated successfully');
         else
